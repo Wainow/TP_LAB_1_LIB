@@ -1,0 +1,2 @@
+rootProject.name = "TP_LAB_1_LIB"
+include ':app'

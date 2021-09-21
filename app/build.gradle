@@ -45,21 +45,13 @@ dependencies {
 }
 
 afterEvaluate {
-    // To avoid publishing of the applications inside the project ..
-    if (!plugins.hasPlugin("android")) {
-        publishing {
-            publications {
-                mavenAar(MavenPublication) {
-                    afterEvaluate {
-                        artifactId "$project.name"
-                        from components.release
-                    }
-                }
-            }
-            repositories {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.wainow.tp_lab_1_lib.domain'
-                artifactId = 'tp_lab_1_lib'
+                groupId = 'com.bks.compose.circularprogressview'
+                artifactId = 'circular-progress-view'
                 version = '1.0.0'
             }
         }

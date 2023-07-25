@@ -1,8 +1,12 @@
 package com.wainow.tp_lab_1.domain
 
+import android.content.Context
+import androidx.media3.exoplayer.ExoPlayer
+
 interface Interactor {
     fun numFrequency(input: Collection<Int>): Any
     fun mostFrequent(input: Collection<Number>): Collection<Int>
+    fun getExoPlayer(context: Context): ExoPlayer
 }
 
 class NumberInteractor: Interactor{
@@ -18,5 +22,9 @@ class NumberInteractor: Interactor{
         return input
             .filter { it.frequency == maxFrequency }
             .map { it.num }
+    }
+
+    override fun getExoPlayer(context: Context): ExoPlayer {
+        return ExoPlayer.Builder(context).build();
     }
 }

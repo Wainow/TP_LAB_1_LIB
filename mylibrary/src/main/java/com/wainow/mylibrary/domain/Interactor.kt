@@ -2,6 +2,7 @@ package com.wainow.tp_lab_1.domain
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.media3.common.C.ASCII_NAME
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.FilteringMediaSource
 import androidx.media3.exoplayer.source.MediaSource
@@ -10,7 +11,7 @@ interface Interactor {
     fun numFrequency(input: Collection<Int>): Any
     fun mostFrequent(input: Collection<Number>): Collection<Int>
     fun getExoPlayer(context: Context): ExoPlayer
-    fun getFilteringMediaSource() : FilteringMediaSource?
+    fun getSomething(): String
 }
 
 class NumberInteractor: Interactor{
@@ -30,14 +31,13 @@ class NumberInteractor: Interactor{
 
     @SuppressLint("UnsafeOptInUsageError")
     override fun getExoPlayer(context: Context): ExoPlayer {
-        val mediaSource : MediaSource? = null;
-        val filteringMediaSource = FilteringMediaSource(mediaSource!!, 0)
-        return ExoPlayer.Builder(context).build();
+        val exoplayer = ExoPlayer.Builder(context).build();
+        exoplayer.retry()
+        return exoplayer
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    override fun getFilteringMediaSource(): FilteringMediaSource? {
-        val mediaSource: MediaSource? = null;
-        return FilteringMediaSource(mediaSource!!, 0)
+    override fun getSomething(): String {
+        return ASCII_NAME
     }
 }

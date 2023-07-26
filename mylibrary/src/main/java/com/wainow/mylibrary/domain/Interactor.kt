@@ -1,7 +1,8 @@
 package com.wainow.tp_lab_1.domain
 
 import android.content.Context
-import androidx.media3.exoplayer.ExoPlayer
+
+import androidx.mynewmedia4.exoplayer.ExoPlayer
 
 interface Interactor {
     fun numFrequency(input: Collection<Int>): Any

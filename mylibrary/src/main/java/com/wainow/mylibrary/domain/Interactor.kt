@@ -2,14 +2,14 @@ package com.wainow.tp_lab_1.domain
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.media3.common.C.ASCII_NAME
-import androidx.media3.exoplayer.ExoPlayer
+import android.util.Log
+import io.bidmachine.BidMachine
+import io.bidmachine.InitializationCallback
 
 interface Interactor {
     fun numFrequency(input: Collection<Int>): Any
     fun mostFrequent(input: Collection<Number>): Collection<Int>
-    fun getExoPlayer(context: Context): ExoPlayer
-    fun getSomething(): String
+    fun doSomething(context: Context)
 }
 
 class NumberInteractor: Interactor{
@@ -28,14 +28,9 @@ class NumberInteractor: Interactor{
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    override fun getExoPlayer(context: Context): ExoPlayer {
-        val exoplayer = ExoPlayer.Builder(context).build();
-        exoplayer.retry()
-        return exoplayer
-    }
-
-    @SuppressLint("UnsafeOptInUsageError")
-    override fun getSomething(): String {
-        return ASCII_NAME
+    override fun doSomething(context: Context) {
+        BidMachine.initialize(context, "") {
+            Log.d("DebugLogs", "initialize")
+        }
     }
 }

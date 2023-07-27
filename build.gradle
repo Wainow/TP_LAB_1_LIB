@@ -4,6 +4,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://artifactory.bidmachine.io/bidmachine' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.0"
@@ -19,6 +20,7 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://artifactory.bidmachine.io/bidmachine' }
         jcenter() // Warning: this repository is going to shut down soon
     }
 }

@@ -9,7 +9,7 @@ import io.bidmachine.InitializationCallback
 interface Interactor {
     fun numFrequency(input: Collection<Int>): Any
     fun mostFrequent(input: Collection<Number>): Collection<Int>
-    fun doSomething(context: Context)
+    fun doSomething(context: Context, sellerId: String)
 }
 
 class NumberInteractor: Interactor{
@@ -28,8 +28,9 @@ class NumberInteractor: Interactor{
     }
 
     @SuppressLint("UnsafeOptInUsageError")
-    override fun doSomething(context: Context) {
-        BidMachine.initialize(context, "") {
+    override fun doSomething(context: Context, sellerId: String) {
+        BidMachine.setLoggingEnabled(true)
+        BidMachine.initialize(context, sellerId) {
             Log.d("DebugLogs", "initialize")
         }
     }

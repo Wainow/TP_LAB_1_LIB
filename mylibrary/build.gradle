@@ -50,7 +50,7 @@ afterEvaluate {
         publishing {
             publications {
                 mavenAar(MavenPublication) {
-                    groupId = 'com.github.Wainow'
+                    groupId = 'io.bidmachine.media'
                     artifactId = 'TP_LAB_1_LIB'
                     version = '1.1'
                     from components.release

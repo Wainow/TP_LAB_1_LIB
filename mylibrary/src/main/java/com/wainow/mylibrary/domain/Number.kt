@@ -1,4 +1,4 @@
-package com.wainow.tp_lab_1.domain
+package com.wainow.mylibrary.domain
 
 data class Number(
     val num: Int,

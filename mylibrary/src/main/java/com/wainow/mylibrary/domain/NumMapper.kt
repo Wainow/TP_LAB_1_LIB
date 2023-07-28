@@ -1,4 +1,4 @@
-package com.wainow.tp_lab_1.domain
+package com.wainow.mylibrary.domain
 
 object NumMapper {
     fun map(strings: Map<Int, Int>): ArrayList<Number> {

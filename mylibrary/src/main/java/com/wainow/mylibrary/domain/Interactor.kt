@@ -1,11 +1,9 @@
-package com.wainow.tp_lab_1.domain
+package com.wainow.mylibrary.domain
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import io.bidmachine.AdRequest
 import io.bidmachine.BidMachine
-import io.bidmachine.InitializationCallback
 import io.bidmachine.banner.BannerRequest
 import io.bidmachine.banner.BannerRequest.AdRequestListener
 import io.bidmachine.models.AuctionResult
@@ -17,7 +15,7 @@ interface Interactor {
     fun doSomething(context: Context, sellerId: String)
 }
 
-class NumberInteractor: Interactor{
+class NumberInteractor: Interactor {
     override fun numFrequency(input: Collection<Int>) =
         NumMapper.map(
             input

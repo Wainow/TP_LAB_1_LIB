@@ -32,15 +32,42 @@ android {
         jvmTarget = '1.8'
     }
 
-    publishNonDefault true
-
-    productFlavors {
-        flavor1 {
-            applicationId "io.bidmachine.media"
+    android.libraryVariants.all { variant ->
+        def oldPackageName = "com.wainow.mylibrary" // Здесь укажите старое имя пакета
+        def newPackageName = "io.bidmachine.media"
+        variant.outputs.all { output ->
+            output.processManifest.doLast {
+                File manifestFile = output.processManifest.manifestOutputFile
+                String manifestContent = manifestFile.getText('UTF-8')
+                manifestContent = manifestContent.replaceAll(Pattern.quote(oldPackageName), newPackageName)
+                manifestFile.write(manifestContent, 'UTF-8')
+            }
         }
 
-        flavor2 {
-            applicationId "io.bidmachine.media"
+        variant.sourceSets.each { sourceSet ->
+            sourceSet.java.srcDirs.each { dir ->
+                def files = fileTree(dir).matching {
+                    include '**/*.java'
+                }
+                files.each { file ->
+                    String content = file.getText('UTF-8')
+                    content = content.replaceAll(Pattern.quote(oldPackageName), newPackageName)
+                    file.write(content, 'UTF-8')
+                }
+            }
+        }
+
+        variant.sourceSets.each { sourceSet ->
+            sourceSet.res.srcDirs.each { dir ->
+                def files = fileTree(dir).matching {
+                    include '**/*.xml'
+                }
+                files.each { file ->
+                    String content = file.getText('UTF-8')
+                    content = content.replaceAll(Pattern.quote(oldPackageName), newPackageName)
+                    file.write(content, 'UTF-8')
+                }
+            }
         }
     }
 }
@@ -65,7 +92,7 @@ afterEvaluate {
                     groupId = 'io.bidmachine.media'
                     artifactId = 'TP_LAB_1_LIB'
                     version = '1.1'
-                    from components.flavor1Release
+                    from components.release
                 }
             }
         }

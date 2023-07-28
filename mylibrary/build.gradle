@@ -33,46 +33,23 @@ android {
     }
 }
 
+
 android.libraryVariants.all { variant ->
-    def oldPackageName = "com.wainow.mylibrary" // Здесь укажите старое имя пакета
-    def newPackageName = "io.bidmachine.media" // Здесь укажите новое имя пакета
+    def oldPackageName = "com.wainow.mylibrary"
+    def newPackageName = "io.bidmachine.media"
 
-    variant.outputs.each { output ->
-        def processManifestTask = output.processManifestProvider.get()
-        processManifestTask.doLast {
-            File manifestFile = processManifestTask.manifestOutputFile.get().asFile
-            String manifestContent = manifestFile.getText('UTF-8')
-            manifestContent = manifestContent.replace(oldPackageName, newPackageName)
-            manifestFile.write(manifestContent, 'UTF-8')
-        }
-    }
-
-    def javaSrcDirs = variant.sourceSets.collect { it.java.srcDirs }.flatten()
-    def resSrcDirs = variant.sourceSets.collect { it.res.srcDirs }.flatten()
-
-    javaSrcDirs.each { dir ->
-        def files = fileTree(dir).matching {
-            include '**/*.java'
-        }
-        files.each { file ->
-            String content = file.getText('UTF-8')
-            content = content.replace(oldPackageName, newPackageName)
-            file.write(content, 'UTF-8')
-        }
-    }
-
-    resSrcDirs.each { dir ->
-        def files = fileTree(dir).matching {
-            include '**/*.xml'
-        }
-        files.each { file ->
-            String content = file.getText('UTF-8')
-            content = content.replace(oldPackageName, newPackageName)
-            file.write(content, 'UTF-8')
+    variant.sourceSets.each { sourceSet ->
+        sourceSet.java.srcDirs.each { javaSrcDir ->
+            // Обрабатываем все Java файлы
+            fileTree(dir: javaSrcDir, include: '**/*.java').each { file ->
+                String content = file.getText('UTF-8')
+                // Заменяем старый пакет на новый в Java файлах
+                content = content.replace("package ${oldPackageName}", "package ${newPackageName}")
+                file.write(content, 'UTF-8')
+            }
         }
     }
 }
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'

@@ -34,21 +34,25 @@ android {
 }
 
 
-android.libraryVariants.all { variant ->
+// Создаем новую задачу для переименования пакета исходных файлов
+task renamePackage(type: Copy) {
     def oldPackageName = "com.wainow.mylibrary"
     def newPackageName = "io.bidmachine.media"
 
-    variant.sourceSets.each { sourceSet ->
-        sourceSet.java.srcDirs.each { javaSrcDir ->
-            // Обрабатываем все Java файлы
-            fileTree(dir: javaSrcDir, include: '**/*.java').each { file ->
-                String content = file.getText('UTF-8')
-                // Заменяем старый пакет на новый в Java файлах
-                content = content.replace("package ${oldPackageName}", "package ${newPackageName}")
-                file.write(content, 'UTF-8')
-            }
-        }
+    // Устанавливаем путь к исходным файлам с текущим пакетом
+    from("${projectDir}/src/main/java/${oldPackageName}".toString())
+    // Устанавливаем путь к исходным файлам с новым пакетом
+    into("${projectDir}/src/main/java/${newPackageName}".toString())
+
+    // Переименовываем файлы, меняя пакет
+    eachFile { details ->
+        details.path = details.path.replace(oldPackageName, newPackageName)
     }
+}
+
+// Конфигурируем задачу сборки, чтобы перед компиляцией выполнялась задача переименования пакета
+android.libraryVariants.all { variant ->
+    variant.javaCompile.dependsOn(renamePackage)
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

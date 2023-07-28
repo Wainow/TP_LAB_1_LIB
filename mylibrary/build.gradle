@@ -9,7 +9,6 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.wainow.mylibrary"
         minSdkVersion 26
         targetSdkVersion 33
         versionCode 1

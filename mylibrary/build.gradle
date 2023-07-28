@@ -9,6 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        applicationId "com.wainow.mylibrary"
         minSdkVersion 26
         targetSdkVersion 33
         versionCode 1
@@ -31,44 +32,44 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
 
-    android.libraryVariants.all { variant ->
-        def oldPackageName = "com.wainow.mylibrary" // Здесь укажите старое имя пакета
-        def newPackageName = "io.bidmachine.media" // Здесь укажите новое имя пакета
+android.libraryVariants.all { variant ->
+    def oldPackageName = "com.wainow.mylibrary" // Здесь укажите старое имя пакета
+    def newPackageName = "io.bidmachine.media" // Здесь укажите новое имя пакета
 
-        variant.outputs.each { output ->
-            def processManifestTask = output.processManifestProvider.get()
-            processManifestTask.doLast {
-                File manifestFile = processManifestTask.manifestOutputFile.get().asFile
-                String manifestContent = manifestFile.getText('UTF-8')
-                manifestContent = manifestContent.replace(oldPackageName, newPackageName)
-                manifestFile.write(manifestContent, 'UTF-8')
-            }
+    variant.outputs.each { output ->
+        def processManifestTask = output.processManifestProvider.get()
+        processManifestTask.doLast {
+            File manifestFile = processManifestTask.manifestOutputFile.get().asFile
+            String manifestContent = manifestFile.getText('UTF-8')
+            manifestContent = manifestContent.replace(oldPackageName, newPackageName)
+            manifestFile.write(manifestContent, 'UTF-8')
         }
+    }
 
-        def javaSrcDirs = variant.sourceSets.collect { it.java.srcDirs }.flatten()
-        def resSrcDirs = variant.sourceSets.collect { it.res.srcDirs }.flatten()
+    def javaSrcDirs = variant.sourceSets.collect { it.java.srcDirs }.flatten()
+    def resSrcDirs = variant.sourceSets.collect { it.res.srcDirs }.flatten()
 
-        javaSrcDirs.each { dir ->
-            def files = fileTree(dir).matching {
-                include '**/*.java'
-            }
-            files.each { file ->
-                String content = file.getText('UTF-8')
-                content = content.replace(oldPackageName, newPackageName)
-                file.write(content, 'UTF-8')
-            }
+    javaSrcDirs.each { dir ->
+        def files = fileTree(dir).matching {
+            include '**/*.java'
         }
+        files.each { file ->
+            String content = file.getText('UTF-8')
+            content = content.replace(oldPackageName, newPackageName)
+            file.write(content, 'UTF-8')
+        }
+    }
 
-        resSrcDirs.each { dir ->
-            def files = fileTree(dir).matching {
-                include '**/*.xml'
-            }
-            files.each { file ->
-                String content = file.getText('UTF-8')
-                content = content.replace(oldPackageName, newPackageName)
-                file.write(content, 'UTF-8')
-            }
+    resSrcDirs.each { dir ->
+        def files = fileTree(dir).matching {
+            include '**/*.xml'
+        }
+        files.each { file ->
+            String content = file.getText('UTF-8')
+            content = content.replace(oldPackageName, newPackageName)
+            file.write(content, 'UTF-8')
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.wainow.mylibrary.domain
+package io.bidmachine.media.domain
 
 data class Number(
     val num: Int,

@@ -1,4 +1,4 @@
-package com.wainow.mylibrary.domain
+package io.bidmachine.media.domain
 
 object NumMapper {
     fun map(strings: Map<Int, Int>): ArrayList<Number> {
